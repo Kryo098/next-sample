@@ -35,5 +35,13 @@ export const getStaticProps: GetStaticProps<SSGProps> = async (context) => {
     },
   }
 }
+//----context.localeでアクセスできるデータ----//
+// params       : パスパラメータ。SSGはgetStaticPaths関数を別途定義した時に参照可能
+// locale       : 現在のロケール情報（可能な限り）
+// locales      : サポートしているロケールのデータ（可能な限り）
+// defaultLocale: デフォルトのロケールのデータ（可能な限り）
+// preview      : Preview Modeか
+// previewData  : Preview ModeでsetPreviewDataによってセットされたデータ
+
 
 export default SSG
