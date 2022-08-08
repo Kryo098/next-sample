@@ -1,5 +1,43 @@
-const sample = () => {
-  return <></>
+import { GetServerSideProps, NextPage } from "next"
+import Head from "next/head"
+
+type SSRProps = {
+  message: string
 }
 
-export default sample
+const SSR: NextPage<SSRProps> = (props) => {
+  const { message } = props
+  return (
+    <div>
+      <Head>
+        <title>Create Next App</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <main>
+        <p>このページはサーバー再度レンダリングによってアクセス時にサーバーで描画されたページです</p>
+        <p>{message}</p>
+      </main>
+    </div>
+  )
+}
+
+// getServerSidePropsの引数のcontextでは、getStaticPropsのcontextで参照できるデータに加え、リクエスト情報などを参照できる
+// req        : http.IncomingMassageのインスタンスでリクエスト情報、Cookieを参照できる
+// res        : http.ServerResponseのインスタンスでCookieをセット、レスポンスヘッダーを書き換えたりできる
+// resolvedUrl: 実際にアクセスがあったパス
+// query      : そのクエリをオブジェクト化したもの
+
+export const getServerSideProps: GetServerSideProps<SSRProps> = async(
+  context
+) => {
+  const timestamp = new Date().toLocaleString()
+  const message = `${timestamp}にこのページのgetServerSidePropsが実行されました`
+  console.log(message)
+  return {
+    props: {
+      message,
+    }
+  }
+}
+
+export default SSR
